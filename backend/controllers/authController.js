@@ -1,11 +1,11 @@
 import { hash, compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+const { sign } = jwt;
 
-import User, { findOne } from "../models/User";
-
+import User from "../models/User.js";
 
 // Register User Controller
-const registerController =  async (req, res) => {
+export const registerController = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hashedPassword = await hash(password, 10);
   const user = new User({ firstName, lastName, email, password: hashedPassword });
@@ -16,12 +16,12 @@ const registerController =  async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 // Login User Controller
-const loginController = async (req, res) => {
+export const loginController = async (req, res) => {
   const { email, password } = req.body;
-  const user = await findOne({ email });
+  const user = await User.findOne({ email });
 
   if (!user || !(await compare(password, user.password))) {
     return res.status(400).json({ message: "Invalid credentials" });
@@ -29,7 +29,6 @@ const loginController = async (req, res) => {
 
   const token = sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
   res.json({ token, isAdmin: user.isAdmin });
-}
+};
 
-
-export default { loginController, registerController };
+// export default { loginController, registerController };
