@@ -1,7 +1,8 @@
 import React from 'react';
+
 import Product from '../components/ProductCard';
 
-export const Home = () => {
+ const Home = () => {
     return (
         <div>
       <h2>Products</h2>
@@ -11,3 +12,5 @@ export const Home = () => {
     </div>
     )
 }
+
+export default Home;
