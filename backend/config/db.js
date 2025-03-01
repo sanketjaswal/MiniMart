@@ -4,6 +4,7 @@ import colors from "colors";
 
 dotenv.config();
 
+// Connect to Mongo DB
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {

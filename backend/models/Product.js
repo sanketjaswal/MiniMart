@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+// Product Data Model
+
 const ProductSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },

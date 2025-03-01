@@ -1,5 +1,6 @@
 import Product, { find, findByIdAndDelete } from "../models/Product";
 
+// Add Product (Admin only)
 const addProduct = async (req, res) => {
     if (!req.user.isAdmin) return res.status(403).json({ message: "Not authorized" });
   
@@ -8,12 +9,13 @@ const addProduct = async (req, res) => {
     res.json(product);
   };
   
+ // Get All Products 
 const getProducts = async (req, res) => {
   const products = await find();
   res.json(products);
 }
 
-
+// Delete Product (Admin only)
 const deleteProduct = async (req, res) => {
     if (!req.user.isAdmin) return res.status(403).json({ message: "Not authorized" });
   

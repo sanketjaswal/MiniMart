@@ -4,6 +4,7 @@ import { sign } from "jsonwebtoken";
 import User, { findOne } from "../models/User";
 
 
+// Register User Controller
 const registerController =  async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hashedPassword = await hash(password, 10);
@@ -17,6 +18,7 @@ const registerController =  async (req, res) => {
   }
 }
 
+// Login User Controller
 const loginController = async (req, res) => {
   const { email, password } = req.body;
   const user = await findOne({ email });

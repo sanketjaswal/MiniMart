@@ -1,5 +1,7 @@
 import { verify } from "jsonwebtoken";
 
+// Check if Current User is ADMIN
+
 const isAdmin = (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) return res.status(401).json({ message: "Access Denied" });

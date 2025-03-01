@@ -1,15 +1,16 @@
 import { Router } from "express";
 import { isAdmin } from "../middleware/authMiddleware";
+import { addProduct, deleteProduct, getProducts } from "../controllers/productController";
 
-const router = Router();
+const productRoutes = Router();
 
 // Add Product (Admin only)
-router.post("/", isAdmin , );
+productRoutes.post("/", isAdmin , addProduct );
 
 // Get All Products
-router.get("/", );
+productRoutes.get("/", getProducts);
 
 // Delete Product (Admin only)
-router.delete("/:id", isAdmin, );
+productRoutes.delete("/:id", isAdmin, deleteProduct);
 
-export default router;
+export default productRoutes;
