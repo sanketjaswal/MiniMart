@@ -19,11 +19,12 @@ const app = express();
 connectDB();
 
 app.use(json());
+app.use(cors());
 
-app.use(cors({
-  origin: ["http://localhost:3000", "https://minimart-oa4p.onrender.com/"],
-  credentials: true
-}))
+// app.use(cors({
+//   origin: ["http://localhost:3000", "https://your-frontend.onrender.com"],
+//   credentials: true
+// }))
 
 // Add Routes to Server
 app.use("/api/auth", authRoutes);
