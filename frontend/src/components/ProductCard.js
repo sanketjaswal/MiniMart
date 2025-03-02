@@ -1,32 +1,21 @@
 import React, { useContext } from 'react'
-
 import styled from 'styled-components'
-
 import { addTOCart } from '../services/cartAPI'
 import { AuthContext } from '../context/AuthContext'
 
 const Product = ({ product, addToCart }) => {
-  //auth context
   const { user } = useContext(AuthContext)
-  
+
   if (!product) {
     return null
   }
 
-
-  // add to cart
   const handleAddToCart = async () => {
     const token = user?.token
     if (!token) return alert('Unauthorized')
 
-    console.log('token', token)
-    console.log('product._id', product._id)
-
     try {
-      // API call
-      const { data } = await addTOCart({ productId: product._id }, token)
-
-      console.log('Product addded', data)
+      await addTOCart({ productId: product._id }, token)
       alert('Product Added to cart')
     } catch (error) {
       console.error('Error Adding to cart: ' + error.message)
@@ -39,15 +28,17 @@ const Product = ({ product, addToCart }) => {
     <Card>
       <ImageContainer>
         <Image alt="img" src={product.image} />
-        <video width="320" height="240" autoPlay muted loop>
+        <Video autoPlay muted loop>
           <source src={product.image} type="video/mp4" />
-        </video>
+        </Video>
       </ImageContainer>
       <Details>
         <Title>{product.name}</Title>
         <Description>{product.description}</Description>
+        <Button id="addBtn" onClick={handleAddToCart}>
+          Add to cart
+        </Button>
       </Details>
-      <Button onClick={() => handleAddToCart()}>Buy Now</Button>
     </Card>
   )
 }
@@ -55,22 +46,36 @@ const Product = ({ product, addToCart }) => {
 export default Product
 
 const Card = styled.div`
-  width: 340px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background: #e7e5e4;
-  margin: 12px 40px;
-  max-width: 20rem;
+  background: transparent;
+  margin: 12px auto;
   border-radius: 0.5rem;
-  padding-bottom: 2.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
   transition: 0.3s ease-in-out;
   position: relative;
+  transition: all.5s;
+  padding: 1rem;
+  color: white;
+  filter: saturate(0.3);
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    background: #f3f4f6;
+    background: rgb(29, 29, 29);
+    color: #f3f4f6;
+    filter: saturate(1);
+    transform: scale(1.01) translateY(-5px);
+  }
+
+  &:hover {
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `
 
@@ -80,13 +85,15 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
   position: relative;
+  transition: all.3s;
 `
 
 const Image = styled.img`
-  width: 100%;
-  height: 95%;
+  width: 50%;
+  height: auto;
+  display: none;
   border-radius: 0.5rem;
   position: absolute;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -100,16 +107,48 @@ const Image = styled.img`
   }
 `
 
+const Video = styled.video`
+  width: 80%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all.3s;
+
+  @media (max-width: 1000px) {
+    width: 90%;
+  }
+
+  @media (max-width: 768px) {
+    width: 70%;
+  }
+
+  @media (max-width: 600px) {
+    width: 85%;
+  }
+`
+
 const Details = styled.div`
   width: 100%;
   padding: 0.25rem 1rem;
   text-align: start;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all.3s;
 `
 
 const Title = styled.div`
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 2.25rem;
   margin-bottom: 0.5rem;
+  text-align: center;
+  transition: all.3s;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `
 
 const Description = styled.p`
@@ -119,14 +158,19 @@ const Description = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   display: -webkit-box;
+  text-align: center;
+  transition: all.3s;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 `
 
 const Button = styled.div`
   background: #0ea5e9;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  position: absolute;
-  bottom: -1rem;
+  max-width: 50%;
   transition: 0.3s ease-in-out;
   opacity: 0;
   cursor: pointer;
@@ -136,10 +180,16 @@ const Button = styled.div`
 
   ${Card}:hover & {
     opacity: 1;
+    transform: translateY(15px);
   }
 
   &:hover {
-    transform: scale(1.1);
-    background: #0284c7;
+    background: rgb(24, 115, 160);
+    box-shadow: 0 2px 4px rgb(51, 51, 51);
+  }
+
+  @media (max-width: 768px) {
+    bottom: -0.5rem;
+    font-size: 0.875rem;
   }
 `

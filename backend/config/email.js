@@ -14,13 +14,13 @@ const transporter = createTransport({
 const sendEmail = async (to, subject, text, html) => {
   try {
     await transporter.sendMail({
-      from: `"E-Commerce Store" <${process.env.ADMIN_EMAIL}>`,
+      from: `"Mini Mart - nyuc" <${process.env.ADMIN_EMAIL}>`,
       to,
       subject,
       text,
       html,
     });
-    console.log("📧 Email sent successfully");
+    console.log("Email sent successfully");
   } catch (err) {
     console.error("Error sending email:", err);
   }

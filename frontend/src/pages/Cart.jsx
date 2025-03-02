@@ -3,12 +3,17 @@ import styled from "styled-components";
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { getCart, removeFromCart } from '../services/cartAPI';
+import { sendQuery } from '../services/queryAPI';
 
 const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const token = user?.token;
   const [loading, setLoading] = useState(true);
+  const [querySent, setQuerySent] = useState(false); 
+
+
+
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -34,6 +39,28 @@ const Cart = () => {
       console.error("Error removing item:", error);
     }
   };
+  const handleSendQuery = async () => {
+    if (!token) {
+      alert("Please login to send a query.");
+      return;
+    }
+
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const productNames = cart.map((item) => item.productId.name);
+
+    try {
+      await sendQuery(productNames, token);
+      console.log("Query sent successfully!");
+      setQuerySent(true);
+    } catch (error) {
+      console.error("Error sending query.");
+      console.error(error);
+    }
+  };
 
   // const handleQuantityChange = async (productId, newQuantity) => {
   //   if (newQuantity < 1) return;
@@ -53,6 +80,7 @@ const Cart = () => {
       ) : cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
+        
         cart.map((item) => (
           <CartItem key={item.productId._id}>
             <img src={item.productId.image} alt={item.productId.name} />
@@ -69,11 +97,12 @@ const Cart = () => {
                 {/* <button onClick={() => handleQuantityChange(item.productId._id, item.quantity + 1)}>+</button> */}
               </QuantityControls>
               <RemoveButton onClick={() => handleRemove(item.productId._id)}>Remove</RemoveButton>
+        
             </div>
-            <button>Send Query</button>
           </CartItem>
         ))
       )}
+      <button onClick={handleSendQuery} disabled={querySent}>Send Query</button>
     </Container>
   );
 };

@@ -1,34 +1,77 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react'
 
-import Product from '../components/ProductCard';
-import { CartContext } from '../context/CartContext';
-import { getProducts } from '../services/productAPI';
+import Product from '../components/ProductCard'
+import { CartContext } from '../context/CartContext'
+import { getProducts } from '../services/productAPI'
+import styled, { keyframes } from 'styled-components'
 
- const Home = () => {
-
-  const [products, setProducts] = useState([]);
-  const { addToCart } = useContext(CartContext);
+const Home = () => {
+  const [products, setProducts] = useState([])
+  const { addToCart } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await getProducts();
-      setProducts(res.data);
+      const res = await getProducts()
+      setProducts(res.data)
       // console.log(res.data);
-    };
-    fetchProducts();
-  }, []);
+    }
+    fetchProducts()
+  }, [])
 
-    return (
-      <div>
-      <h2>Products</h2>
-      <div>
+  return (
+    <Container>
+      <Title>Products</Title>
+      <ProductsGrid>
         {products.map((product) => (
           <Product key={product._id} product={product} addToCart={addToCart} />
         ))}
-      </div>
-    </div>
-    
-    )
+      </ProductsGrid>
+    </Container>
+  )
 }
 
-export default Home;
+export default Home
+
+// Styled Components
+
+
+const slideIn = keyframes`
+  0% {
+    transform: translateX(-100%);
+  }
+  95% {
+    transform: translateX(2%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+`;
+
+const Title = styled.h2`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #a3a3a3;
+  animation: ${slideIn} 01s ease-in-out;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const ProductsGrid = styled.div`
+  
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+`;
