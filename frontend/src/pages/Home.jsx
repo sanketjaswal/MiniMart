@@ -35,7 +35,7 @@ export default Home
 // Styled Components
 
 
-const slideIn = keyframes`
+const slideLeft = keyframes`
   0% {
     transform: translateX(-100%);
   }
@@ -44,6 +44,18 @@ const slideIn = keyframes`
   }
   100% {
     transform: translateX(0);
+  }
+`;
+
+
+const SlideIn = keyframes`
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 `;
 
@@ -60,7 +72,7 @@ const Title = styled.h2`
   font-weight: bold;
   margin-bottom: 2rem;
   color: #a3a3a3;
-  animation: ${slideIn} 01s ease-in-out;
+  animation: ${slideLeft} 01s ease-in-out;
   @media (max-width: 768px) {
     font-size: 1.5rem;
   }
@@ -69,9 +81,6 @@ const Title = styled.h2`
 const ProductsGrid = styled.div`
   
   justify-content: center;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  opacity: 0;
+  animation: ${SlideIn} 1s ease-in-out 1s forwards;
 `;
