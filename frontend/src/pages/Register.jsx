@@ -34,7 +34,7 @@ const Register = () => {
     } catch (error) {
       console.error(
         'Error registering user: ' +
-          (error.response?.data?.error || error.message)
+          ( error.message)
       )
     }
   }

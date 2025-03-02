@@ -13,6 +13,7 @@ import Register from './pages/Register'
 import Navbar from './components/Navbar'
 import AdminPanel from './pages/AdminPanel'
 import { AuthProvider } from './context/AuthContext'
+import { CartProvider } from './context/CartContext'
 
 function App() {
   // Check if user is authenticated
@@ -24,20 +25,22 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
-          {/* Only available for Admin */}
-          <Route
-            path="/adminPanel"
-            element={isAuthenticated ? <AdminPanel /> : <Navigate to="/" />}
-          />
-        </Routes>
-      </Router>
+      <CartProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/cart" element={<Cart />} />
+            {/* Only available for Admin */}
+            <Route
+              path="/adminPanel"
+              element={isAuthenticated ? <AdminPanel /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </Router>
+      </CartProvider>
     </AuthProvider>
   )
 }

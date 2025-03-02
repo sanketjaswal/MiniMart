@@ -6,6 +6,7 @@ const addProductToCart = async (req, res) => {
   const { productId } = req.body
 
   console.log('req.user', req.user)
+  console.log('productId', productId)
 
   const userId = req.user.id
 

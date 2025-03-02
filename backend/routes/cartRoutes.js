@@ -13,6 +13,6 @@ cartRoutes.post("/add", authorize , addProductToCart);
 cartRoutes.delete("/remove/:productId", authorize, removeProductFromCart);
 
 // Get User's Cart
-cartRoutes.get("/", authorize, getCart);
+cartRoutes.get("/get", authorize, getCart);
 
 export default cartRoutes;
