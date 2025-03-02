@@ -7,11 +7,11 @@ import { AuthContext } from '../context/AuthContext'
 
 const Navbar = () => {
   // Authcontext
-  const { user, logout } = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <Nav>
-      <h2>E-Commerce</h2>
+      <h2>Mini Mart</h2>
       <Links>
         <Link to="/">Home</Link>
         {user ? (

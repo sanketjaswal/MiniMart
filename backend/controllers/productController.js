@@ -5,6 +5,7 @@ const addProduct = async (req, res) => {
   if (!req.user.isAdmin) return res.status(403).json({ message: "Not authorized" });
 
   try {
+    console.log("form body",req.body);
     const product = new Product(req.body);
     await product.save();
     res.json(product);

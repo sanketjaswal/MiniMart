@@ -18,6 +18,9 @@ function App() {
   // Check if user is authenticated
 
   const storedUser = localStorage.getItem('user')
+
+  console.log(storedUser)
+
   const isAuthenticated = storedUser ? JSON.parse(storedUser).isAdmin : false
 
   // const isAuthenticated = true;
