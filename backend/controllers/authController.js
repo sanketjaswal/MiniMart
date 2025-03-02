@@ -7,6 +7,7 @@ import User from "../models/User.js";
 // Register User Controller
 export const registerController = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
+  console.log(firstName, lastName, email, password)
   const hashedPassword = await hash(password, 10);
   const user = new User({ firstName, lastName, email, password: hashedPassword });
 
@@ -21,6 +22,7 @@ export const registerController = async (req, res) => {
 // Login User Controller
 export const loginController = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password)
   const user = await User.findOne({ email });
 
   if (!user || !(await compare(password, user.password))) {
@@ -30,5 +32,3 @@ export const loginController = async (req, res) => {
   const token = sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
   res.json({ token, isAdmin: user.isAdmin });
 };
-
-// export default { loginController, registerController };
