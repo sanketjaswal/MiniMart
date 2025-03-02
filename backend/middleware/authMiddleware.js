@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const isAdmin = (req, res, next) => {
+export const authorize = (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) return res.status(401).json({ message: "Access Denied" });
 

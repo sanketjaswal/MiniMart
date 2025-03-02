@@ -6,21 +6,17 @@ import {
   Navigate,
 } from 'react-router-dom'
 
-import Navbar from './components/Navbar'
+import Cart from './pages/Cart'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Navbar from './components/Navbar'
 import AdminPanel from './pages/AdminPanel'
-import Cart from './pages/Cart'
 import { AuthProvider } from './context/AuthContext'
 
 function App() {
   // Check if user is authenticated
-
   const storedUser = localStorage.getItem('user')
-
-  console.log(storedUser)
-
   const isAuthenticated = storedUser ? JSON.parse(storedUser).isAdmin : false
 
   // const isAuthenticated = true;
