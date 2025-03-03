@@ -106,7 +106,7 @@ const Container = styled.div`
 const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-block: 9rem 2rem;
   color: #a3a3a3;
   animation: ${slideLeft} 01s ease-in-out;
 
@@ -129,7 +129,7 @@ const FormContainer = styled.div`
   text-align: center;
   filter: saturate(0.3);
   opacity: 0;
-  animation: ${SlideIn} 1s ease-in-out 1s forwards;
+  animation: ${SlideIn} .5s ease-in-out 1.5s forwards;
 
   &:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);

@@ -76,11 +76,14 @@ const AdminPanel = () => {
         <SubmitButton type="submit">Add Product</SubmitButton>
       </Form>
 
-      <br/> <br/>
+      <br/>
 
       <HR/>
 
+      <br/>
+
       <MiniTitle>Product List</MiniTitle>
+      <br/>
       <ProductList>
         {products.map((product) => (
           <ProductItem key={product._id}>
@@ -148,7 +151,7 @@ const Container = styled.div`
 const HR = styled.hr`
  color: #0ea4e966;
  opacity: 0;
- animation: ${SlideIn} 1s ease-in-out 1.5s forwards;
+ animation: ${SlideIn} .5s ease-in-out 1.8s forwards;
 
 
 `;
@@ -156,7 +159,7 @@ const HR = styled.hr`
 const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-block: 9rem 2rem;
   color: #0ea5e9;
   animation: ${slideLeft} 01s ease-in-out;
   /* font-style: italic; */
@@ -172,7 +175,7 @@ const MiniTitle = styled.h2`
   margin-bottom: 1.5rem;
   color: #a3a3a3;
   opacity: 0;
-  animation: ${SlideIn} 1s ease-in-out 1s forwards;
+  animation: ${SlideIn} .5s ease-in-out 2.2s forwards;
 
 
   @media (max-width: 768px) {
@@ -268,7 +271,7 @@ const ProductList = styled.ul`
   list-style: none;
   padding: 0;
   opacity: 0;
-  animation: ${SlideIn} 1s ease-in-out 2s forwards;
+  animation: ${SlideIn} .5s ease-in-out 2.5s forwards;
 
 `;
 

@@ -17,10 +17,20 @@ const Navbar = () => {
   // Menu Animation
   const [isAnimating, setIsAnimating] = useState(false);
 
-
+  //menu toggle and anutomatic close
+  const closeMenuAfterTime = () => {
+    setShowDropdown((prev) => !prev);
+    if (showDropdown !== false) { 
+      setTimeout(() => {
+        document.getElementById('menu-toggle')?.click();
+      }, 10000);
+    }
+  };
+  
+  // Menu Animation
   const menuClick = () => {
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 500); // Reset after animation duration
+    setTimeout(() => setIsAnimating(false), 500);
   };
 
   return (
@@ -56,11 +66,12 @@ const Navbar = () => {
         </Links>
       )}
       <ToggleButton
+        id='menu-toggle'
         src={showDropdown ? menu : menuOn}
         $showDropdown={showDropdown}
         $isAnimating={isAnimating}
         alt="menu"
-        onClick={() => {setShowDropdown(!showDropdown); menuClick() }}
+        onClick={() => {closeMenuAfterTime(); menuClick() }}
       />{' '}
     </Nav>
   )
@@ -120,7 +131,7 @@ const Nav = styled.nav`
   width: 100%;
   height: auto;
   z-index: 9999;
-  animation: ${logoAnimation} 3s ease-in-out forwards;
+  animation: ${logoAnimation} 2.5s ease-in-out forwards;
 
   @media (max-width: 768px) {
     flex-direction: column;

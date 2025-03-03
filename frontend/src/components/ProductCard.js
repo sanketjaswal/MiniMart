@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { addTOCart } from '../services/cartAPI'
 import { AuthContext } from '../context/AuthContext'
+import { toast } from 'react-toastify'
 
 const Product = ({ product, addToCart }) => {
   const { user } = useContext(AuthContext)
@@ -12,12 +13,13 @@ const Product = ({ product, addToCart }) => {
 
   const handleAddToCart = async () => {
     const token = user?.token
-    if (!token) return alert('Unauthorized')
+    if (!token) return toast.warning("Login to access cart")
 
     try {
       await addTOCart({ productId: product._id }, token)
-      alert('Product Added to cart')
+      toast.success("Product added to cart!")
     } catch (error) {
+      toast.error("Error adding to cart! Please try again later.")
       console.error('Error Adding to cart: ' + error.message)
     }
 
@@ -81,19 +83,26 @@ const Card = styled.div`
   }
 
   @media (max-width: 768px) {
+    &:nth-child(odd) {
     flex-direction: column;
+  }
+
+  &:nth-child(even) {
+    flex-direction: column;
+  }
   }
 `
 
 const ImageContainer = styled.div`
   width: 100%;
-  min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-top: 0.5rem; */
+  margin-block: 1rem;
   position: relative;
   transition: all.3s;
+  @media (max-width: 768px) {
+  }
 `
 
 const Image = styled.img`
@@ -125,11 +134,7 @@ const Video = styled.video`
   }
 
   @media (max-width: 768px) {
-    width: 70%;
-  }
-
-  @media (max-width: 600px) {
-    width: 85%;
+    width: 80%;
   }
 `
 
@@ -183,6 +188,7 @@ const Button = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   color: white;
   text-align: center;
+  margin-bottom: 10px;
 
   ${Card}:hover & {
     opacity: 1;

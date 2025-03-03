@@ -103,10 +103,11 @@ const Cart = () => {
         ))
       )}
       {
-        cart ?
+       cart.length > 0 && (
         <QueryButton onClick={handleSendQuery} disabled={querySent}>
-        Send Query
-      </QueryButton> : ""
+          Send Query
+        </QueryButton>
+      )
       }
     </Container>
   );
@@ -158,7 +159,7 @@ const Container = styled.div`
 const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-block: 9rem 2rem;
   color: #a3a3a3;
   animation: ${slideRight} 01s ease-in-out;
 
@@ -170,6 +171,9 @@ const Title = styled.h2`
 const Message = styled.p`
   font-size: 1.2rem;
   color: #ccc;
+  opacity: 0;
+  animation: ${SlideIn} 0.5s ease-in-out 1s forwards;
+
 `;
 
 const CartItem = styled.div`
@@ -188,7 +192,8 @@ const CartItem = styled.div`
   filter: saturate(0.3);
   font-family: 'Ubuntu', sans-serif;
   cursor: pointer;
-  animation: ${SlideIn} 01s ease-in-out;
+  opacity: 0;
+  animation: ${SlideIn} 0.5s ease-in-out 1.5s forwards;
 
 
   &:hover {

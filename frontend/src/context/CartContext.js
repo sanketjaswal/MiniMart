@@ -1,6 +1,5 @@
 import React from "react";
 import { createContext, useState } from "react";
-import { toast } from "react-toastify";
 
 export const CartContext = createContext();
 
@@ -12,13 +11,11 @@ export const CartProvider = ({ children }) => {
   // add to cart
   const addToCart = (product) => {
     setCart([...cart, product]);
-    toast.success("Product added to cart.")
   };
 
 //   remove from cart
   const removeFromCart = (id) => {
     setCart(cart.filter((item) => item.id !== id));
-    toast.success("Product removed from cart.")
   };
 
   return (
