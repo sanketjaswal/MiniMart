@@ -78,21 +78,21 @@ const Cart = () => {
         <Message>Your cart is empty.</Message>
       ) : (
         cart.map((item) => (
-          <CartItem key={item.productId._id}>
+          <CartItem key={item?.productId._id}>
             <ImageContainer>
-              {/* { <Image src={item.productId.image} alt={item.productId.name} />} */}
+              {/* { <Image src={item?.productId.image} alt={item?.productId.name} />} */}
               <Video autoPlay muted loop>
-                <source src={item.productId.image} type="video/mp4" />
+                <source src={item?.productId.image} type="video/mp4" />
               </Video>
             </ImageContainer>
             <Details>
-              <ItemTitle>{item.productId.name}</ItemTitle>
-              <Description>{item.productId.description}</Description>
+              <ItemTitle>{item?.productId.name}</ItemTitle>
+              <Description>{item?.productId.description}</Description>
               <QuantityControls>
                 {/* <h3>Quanity : </h3> */}
-                {/* <Quantity>{item.quantity}</Quantity> */}
+                {/* <Quantity>{item?.quantity}</Quantity> */}
               </QuantityControls>
-              <RemoveButton onClick={() => handleRemove(item.productId._id)}>
+              <RemoveButton onClick={() => handleRemove(item?.productId._id)}>
                 Remove
               </RemoveButton>
             </Details>

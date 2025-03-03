@@ -13,9 +13,13 @@ export const Footer = () => {
             <a href="https://github.com/sanketjaswal/MiniMart">
               <strong>Mini Mart</strong>{' '}
             </a>
-             - Made for Interview Purposes.
+             - Made for Interview Purposes .
           </p>
-          <p>The data used in this project is sourced from © Nyuc Tech.</p>
+          <p>The data used in this project is sourced from
+          <a href="https://www.nyuctech.com/index.html">
+              <strong> © Nyuc Tech</strong>{' '}
+            </a>
+            .</p>
         </FooterSection>
         <FooterSection>
           <h4>Quick Links</h4>
@@ -87,7 +91,12 @@ const FooterSection = styled.div`
   }
 
   strong {
-    font-size: 20px;
+    text-shadow: 0 2px 1px #0ea5e9;
+    font-size: 17px;
+    &:hover {
+        color: #0ea5e9;
+        text-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
   }
 `
 
