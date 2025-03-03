@@ -17,6 +17,7 @@ import AdminPanel from './pages/AdminPanel'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import { ToastContainer } from 'react-toastify'
+import { Footer } from './components/Footer'
 
 function App() {
   // Check if user is authenticated
@@ -40,6 +41,7 @@ function App() {
               element={isAuthenticated ? <AdminPanel /> : <Navigate to="/" />}
             />
           </Routes>
+          <Footer />
         </Router>
       </CartProvider>
     </AuthProvider>

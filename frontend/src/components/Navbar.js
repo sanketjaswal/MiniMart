@@ -129,11 +129,12 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Ubuntu', sans-serif;
   padding: 1rem 2rem;
   background-color: rgb(28, 28, 28);
   color: white;
   z-index: 10;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.13);
   position: fixed;
   top: 0;
   left: 0;
@@ -242,8 +243,10 @@ const StyledLink = styled(Link)`
   &:hover {
     color: #0ea5e9;
     transform: scale(1.2);
-    background-color: rgb(22, 22, 22);
+    /* background: linear-gradient(rgb(51/, 51, 51), rgb(28, 28, 28)); */
+    background-color: rgb(85, 85, 85);
     box-shadow: 0 0 6px black;
+    text-shadow: 0 0 3px black;
   }
 
   
