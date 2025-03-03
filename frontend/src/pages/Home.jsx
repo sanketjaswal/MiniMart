@@ -13,7 +13,7 @@ const Home = () => {
     const fetchProducts = async () => {
       const res = await getProducts()
       setProducts(res.data)
-      document.title = "Mini Mart";
+      document.title = 'Mini Mart'
       // console.log(res.data);
     }
     fetchProducts()
@@ -35,7 +35,6 @@ export default Home
 
 // Styled Components
 
-
 const slideLeft = keyframes`
   0% {
     transform: translateX(-100%);
@@ -51,8 +50,7 @@ const slideLeft = keyframes`
     font-style: normal
 
   }
-`;
-
+`
 
 const SlideIn = keyframes`
   0% {
@@ -63,7 +61,7 @@ const SlideIn = keyframes`
     transform: translateY(0);
     opacity: 1;
   }
-`;
+`
 
 const Container = styled.div`
   width: 100%;
@@ -71,7 +69,7 @@ const Container = styled.div`
   margin: auto;
   padding: 2rem;
   text-align: center;
-`;
+`
 
 const Title = styled.h2`
   font-size: 2rem;
@@ -82,10 +80,13 @@ const Title = styled.h2`
   @media (max-width: 768px) {
     font-size: 1.5rem;
   }
-`;
+`
 
 const ProductsGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   justify-content: center;
   opacity: 0;
-  animation: ${SlideIn} .5s ease-in-out 1.5s forwards;
-`;
+  animation: ${SlideIn} 0.5s ease-in-out 1.5s forwards;
+`
