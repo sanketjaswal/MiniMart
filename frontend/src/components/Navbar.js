@@ -17,16 +17,25 @@ const Navbar = () => {
   // Menu Animation
   const [isAnimating, setIsAnimating] = useState(false);
 
-  //menu toggle and anutomatic close
+  // menu automatic close
   const closeMenuAfterTime = () => {
-    setShowDropdown((prev) => !prev);
-    if (showDropdown !== false) { 
+    if (showDropdown !== true) { 
       setTimeout(() => {
-        document.getElementById('menu-toggle')?.click();
-      }, 10000);
+        toggleDropdown(true)
+        menuClick()
+      }, 2000);
     }
   };
-  
+
+  // Menu Toggle and Anutomatic Close
+  const toggleDropdown = (value = null) => {
+    if(value){
+      setShowDropdown(value)
+    }else{
+      setShowDropdown((prev) => !prev)
+    }
+  };
+
   // Menu Animation
   const menuClick = () => {
     setIsAnimating(true);
@@ -46,23 +55,23 @@ const Navbar = () => {
         ''
       ) : (
         <Links>
-          <StyledLink to="/">Home</StyledLink>
+          <StyledLink onClick={()=> closeMenuAfterTime()} to="/">Home</StyledLink>
           {user ? (
             <>
               <LogoutButton onClick={logout}>LogOut</LogoutButton>
               {user.isAdmin && (
-                <StyledLink $admin to="/adminPanel">
+                <StyledLink onClick={()=> closeMenuAfterTime()} $admin to="/adminPanel">
                   Admin Panel
                 </StyledLink>
               )}
             </>
           ) : (
             <>
-              <StyledLink to="/login">Login</StyledLink>
-              <StyledLink to="/register">Register</StyledLink>
+              <StyledLink onClick={()=> closeMenuAfterTime()} to="/login">Login</StyledLink>
+              <StyledLink onClick={()=> closeMenuAfterTime()} to="/register">Register</StyledLink>
             </>
           )}
-          <StyledLink to="/cart">Cart</StyledLink>
+          <StyledLink onClick={()=> closeMenuAfterTime()} to="/cart">Cart</StyledLink>
         </Links>
       )}
       <ToggleButton
@@ -71,7 +80,7 @@ const Navbar = () => {
         $showDropdown={showDropdown}
         $isAnimating={isAnimating}
         alt="menu"
-        onClick={() => {closeMenuAfterTime(); menuClick() }}
+        onClick={() => { toggleDropdown(); menuClick() }}
       />{' '}
     </Nav>
   )
@@ -110,7 +119,7 @@ const SlideIn = keyframes`
 `
 const wobble = keyframes`
   0% { transform: scale(1) }
-  10% { transform: scale(0.9) }
+  10% { transform: scale(0.8) }
   70% { transform: scale(1.2) }
   100% { transform: scale(1) ; }
 `
@@ -252,7 +261,7 @@ const LogoutButton = styled.div`
   color: white;
   font-size: 1.1rem;
   opacity: 0;
-  animation: ${SlideIn} 0.5s ease-in-out forwards;
+  animation: ${SlideIn} 0.3s ease-in-out forwards;
 
   &:hover {
     background: #be123c;

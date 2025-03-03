@@ -1,91 +1,86 @@
-import React, { useContext, useEffect, useState } from 'react';
-import styled, { keyframes } from "styled-components";
-import { CartContext } from '../context/CartContext';
-import { AuthContext } from '../context/AuthContext';
-import { getCart, removeFromCart } from '../services/cartAPI';
-import { sendQuery } from '../services/queryAPI';
-import { toast } from 'react-toastify';
+import React, { useContext, useEffect, useState } from 'react'
+import styled, { keyframes } from 'styled-components'
+import { CartContext } from '../context/CartContext'
+import { AuthContext } from '../context/AuthContext'
+import { getCart, removeFromCart } from '../services/cartAPI'
+import { sendQuery } from '../services/queryAPI'
+import { toast } from 'react-toastify'
+import { Loader } from '../components/Loader'
 
 const Cart = () => {
-  const { cart, setCart } = useContext(CartContext);
-  const { user } = useContext(AuthContext);
-  const token = user?.token;
-  const [loading, setLoading] = useState(true);
-  const [querySent, setQuerySent] = useState(false); 
-
-
-
+  const { cart, setCart } = useContext(CartContext)
+  const { user } = useContext(AuthContext)
+  const token = user?.token
+  const [loading, setLoading] = useState(true)
+  const [querySent, setQuerySent] = useState(false)
 
   useEffect(() => {
     const fetchCart = async () => {
       if (token) {
         try {
-          const res = await getCart(token);
-          setCart(res.data.products);
+          const res = await getCart(token)
+          setCart(res.data.products)
         } catch (error) {
-          console.error("Error fetching cart:", error);
+          console.error('Error fetching cart:', error)
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
       } else {
-        setLoading(false); // Fix: Ensure loading is set to false if no user is logged in
+        setLoading(false) // Fix: Ensure loading is set to false if no user is logged in
       }
-    };
-    document.title = "Mini Mart - Cart";
+    }
+    document.title = 'Mini Mart - Cart'
 
-  
-    fetchCart();
-  }, [token, setCart]);
+    fetchCart()
+  }, [token, setCart])
 
   const handleRemove = async (productId) => {
     try {
-      await removeFromCart(productId, token);
-      setCart(cart.filter((item) => item.productId._id !== productId));
-      toast.success("Product Removed successfully")
-  
+      await removeFromCart(productId, token)
+      setCart(cart.filter((item) => item.productId._id !== productId))
+      toast.success('Product Removed successfully')
     } catch (error) {
-      toast.error("Error removing item! Please try again later!")
+      toast.error('Error removing item! Please try again later!')
       // console.error("Error removing item:", error);
     }
-  };
+  }
   const handleSendQuery = async () => {
     if (!token) {
-      toast.warning("Please login to send a query.")
-      return;
+      toast.warning('Please login to send a query.')
+      return
     }
 
     if (cart.length === 0) {
-      toast.warning("Your cart is empty.")
-      return;
+      toast.warning('Your cart is empty.')
+      return
     }
 
-    const productNames = cart.map((item) => item.productId.name);
+    const productNames = cart.map((item) => item.productId.name)
 
     try {
-      await sendQuery(productNames, token);
-      toast.success("Query sent successfully!")
-      setQuerySent(true);
+      await sendQuery(productNames, token)
+      toast.success('Query sent successfully!')
+      setQuerySent(true)
     } catch (error) {
-      toast.error("Error sending query!")
+      toast.error('Error sending query!')
       // console.error("", error);
     }
-  };
+  }
 
   return (
     <Container>
       <Title>CART</Title>
       {loading ? (
-        <Message>Loading...</Message>
+          <Loader />
       ) : user == null ? (
         <Message>Please login to view your cart.</Message>
-      )
-      : cart.length === 0 ? (
+      ) : cart.length === 0 ? (
         <Message>Your cart is empty.</Message>
       ) : (
         cart.map((item) => (
           <CartItem key={item.productId._id}>
             <ImageContainer>
-             {/* { <Image src={item.productId.image} alt={item.productId.name} />} */}
+              {/* { <Image src={item.productId.image} alt={item.productId.name} />} */}
               <Video autoPlay muted loop>
                 <source src={item.productId.image} type="video/mp4" />
               </Video>
@@ -97,24 +92,23 @@ const Cart = () => {
                 {/* <h3>Quanity : </h3> */}
                 {/* <Quantity>{item.quantity}</Quantity> */}
               </QuantityControls>
-              <RemoveButton onClick={() => handleRemove(item.productId._id)}>Remove</RemoveButton>
+              <RemoveButton onClick={() => handleRemove(item.productId._id)}>
+                Remove
+              </RemoveButton>
             </Details>
           </CartItem>
         ))
       )}
-      {
-       cart.length > 0 && (
+      {cart.length > 0 && (
         <QueryButton onClick={handleSendQuery} disabled={querySent}>
           Send Query
         </QueryButton>
-      )
-      }
+      )}
     </Container>
-  );
-};
+  )
+}
 
-export default Cart;
-
+export default Cart
 
 // Styled Components
 
@@ -134,7 +128,7 @@ const slideRight = keyframes`
     font-style: normal
 
   }
-`;
+`
 
 const SlideIn = keyframes`
   0% {
@@ -145,8 +139,7 @@ const SlideIn = keyframes`
     transform: translateY(0);
     opacity: 1;
   }
-`;
-
+`
 
 const Container = styled.div`
   width: 100%;
@@ -154,7 +147,7 @@ const Container = styled.div`
   margin: auto;
   padding: 2rem;
   text-align: center;
-`;
+`
 
 const Title = styled.h2`
   font-size: 2rem;
@@ -166,15 +159,14 @@ const Title = styled.h2`
   @media (max-width: 768px) {
     font-size: 1.5rem;
   }
-`;
+`
 
 const Message = styled.p`
   font-size: 1.2rem;
   color: #ccc;
   opacity: 0;
   animation: ${SlideIn} 0.5s ease-in-out 1s forwards;
-
-`;
+`
 
 const CartItem = styled.div`
   width: 100%;
@@ -195,7 +187,6 @@ const CartItem = styled.div`
   opacity: 0;
   animation: ${SlideIn} 0.5s ease-in-out 1.5s forwards;
 
-
   &:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     background: rgb(29, 29, 29);
@@ -207,7 +198,7 @@ const CartItem = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
-`;
+`
 
 const ImageContainer = styled.div`
   width: 100%;
@@ -217,7 +208,7 @@ const ImageContainer = styled.div`
   align-items: center;
   position: relative;
   transition: all 0.3s;
-`;
+`
 
 // const Image = styled.img`
 //   width: 50%;
@@ -254,7 +245,7 @@ const Video = styled.video`
   @media (max-width: 600px) {
     width: 85%;
   }
-`;
+`
 
 const Details = styled.div`
   width: 100%;
@@ -265,7 +256,7 @@ const Details = styled.div`
   justify-content: center;
   align-items: center;
   transition: all 0.3s;
-`;
+`
 
 const ItemTitle = styled.div`
   font-weight: bold;
@@ -277,7 +268,7 @@ const ItemTitle = styled.div`
   @media (max-width: 768px) {
     font-size: 1.5rem;
   }
-`;
+`
 
 const Description = styled.p`
   color: #4b5563;
@@ -292,7 +283,7 @@ const Description = styled.p`
   @media (max-width: 768px) {
     font-size: 0.875rem;
   }
-`;
+`
 
 const QuantityControls = styled.div`
   display: flex;
@@ -300,7 +291,7 @@ const QuantityControls = styled.div`
   justify-content: center;
   gap: 1rem;
   margin: 1rem 0;
-`;
+`
 
 // const Quantity = styled.span`
 //   font-size: 1.5rem;
@@ -317,7 +308,7 @@ const RemoveButton = styled.button`
   color: white;
   border: none;
   opacity: 0;
-  
+
   ${CartItem}:hover & {
     opacity: 1;
     transform: translateY(-15px);
@@ -330,7 +321,7 @@ const RemoveButton = styled.button`
   @media (max-width: 768px) {
     font-size: 0.875rem;
   }
-`;
+`
 
 const QueryButton = styled.button`
   background: #0ea5e9;
@@ -346,7 +337,6 @@ const QueryButton = styled.button`
   animation: ${SlideIn} 01s ease-in-out 2s forwards;
   font-size: 18px;
 
-
   &:hover {
     background: rgb(24, 115, 160);
     box-shadow: 0 2px 4px rgb(51, 51, 51);
@@ -360,4 +350,4 @@ const QueryButton = styled.button`
     background: gray;
     cursor: not-allowed;
   }
-`;
+`

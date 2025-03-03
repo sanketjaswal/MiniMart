@@ -13,20 +13,20 @@ The **Mini Mart** is a full-stack project using React, Node.js, and MongoDB. It 
 ### User Features
 
 - **User Friendly Interface** : Provide a very soothing experience with good animations and features.
-- **User Authentication**: Secure login and registration with JWT.
-- **Browse Products**: Users can explore a variety of products.
-- **Add to Cart**: Seamless addition and removal of products from the cart.
-- **Send Queries to Admin**: Users can contact the admin for inquiries or support.
-- **Cart Management**: View cart items, adjust quantities, and remove products.
-- **Toast Notifications**: Real-time feedback on actions like adding to cart, placing orders, etc.
-- **Responsive Design**: A mobile-friendly and adaptive interface.
+- **User Authentication** : Secure login and registration with JWT.
+- **Browse Products** : Users can explore a variety of products.
+- **Add to Cart** : Seamless addition and removal of products from the cart.
+- **Send Queries to Admin** : Users can contact the admin for inquiries or support.
+- **Cart Management** : View cart items, adjust quantities, and remove products.
+- **Toast Notifications** : Real-time feedback on actions like adding to cart, placing orders, etc.
+- **Responsive Design** : A mobile-friendly and adaptive interface.
 
 ### Admin Features
 
 - **Admin Authentication** : Secure admin login to access the management panel.
-- **Product Management**: Add and remove products from the catalog.
-- **Browse Products**: Users can explore a variety of products.
-- **Email Notifications**: Automated emails for order confirmations and inquiries.
+- **Product Management** : Add and remove products from the catalog.
+- **Browse Products** : Users can explore a variety of products.
+- **Email Notifications** : Automated emails for order confirmations and inquiries.
 
 
 
@@ -77,8 +77,6 @@ This will run the app in development mode in http://localhost:5000.
 
 Below is a list of dependencies used in the project:
 
-Below is a list of dependencies used in the project:
-
 - **[React](https://www.npmjs.com/package/react)**: Frontend library for building user interfaces.
 - **[Node](https://nodejs.org/en)**: JavaScript runtime environment that  create servers, web apps.
 - **[Colors](https://www.npmjs.com/package/colors)**:A Library for applying color to terminal output.
@@ -87,7 +85,6 @@ Below is a list of dependencies used in the project:
 - **[NodeMailer](https://www.npmjs.com/package/nodemailer)**: Provides API for sending emails through JavaScript.
 - **[Toastify](https://www.npmjs.com/package/react-toastify)**: Integration of notifications to your app with ease.
 - **[BcryptJS](https://www.npmjs.com/package/bcrypt)**: A library to help you hash passwords.
-- **[TypeScript](https://www.npmjs.com/package/typescript)**: For static type checking and enhancing code quality.
 - **[Axios](https://www.npmjs.com/search?q=axios)**: For making API requests to retrieve Pokemon data.
 - **[React Router](https://www.npmjs.com/package/react-router-dom)**: For client-side routing within the application.
 - **[Styled-Components](https://www.npmjs.com/package/styled-components)**: For creating styled React components with scoped CSS.

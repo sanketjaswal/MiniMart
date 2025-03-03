@@ -1,20 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react'
 
+import styled, { keyframes } from 'styled-components'
+
 import Product from '../components/ProductCard'
 import { CartContext } from '../context/CartContext'
 import { getProducts } from '../services/productAPI'
-import styled, { keyframes } from 'styled-components'
+import { Loader } from '../components/Loader'
 
 const Home = () => {
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
   const { addToCart } = useContext(CartContext)
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await getProducts()
-      setProducts(res.data)
+      try {
+        const res = await getProducts()
+        setProducts(res.data)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+      } finally {
+        setLoading(false) // Ensure loading is set to false after fetch
+      }
       document.title = 'Mini Mart'
-      // console.log(res.data);
     }
     fetchProducts()
   }, [])
@@ -22,16 +30,21 @@ const Home = () => {
   return (
     <Container>
       <Title>OUR PRODUCTS</Title>
-      <ProductsGrid>
-        {products.map((product) => (
-          <Product key={product._id} product={product} addToCart={addToCart} />
-        ))}
-      </ProductsGrid>
+      {loading ? (
+          <Loader />
+      ) : (
+        <ProductsGrid>
+          {products.map((product) => (
+            <Product key={product._id} product={product} addToCart={addToCart} />
+          ))}
+        </ProductsGrid>
+      )}
     </Container>
   )
 }
 
 export default Home
+
 
 // Styled Components
 

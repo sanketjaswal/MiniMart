@@ -1,36 +1,69 @@
-import React, { useContext } from 'react'
+import React, { useEffect,  useContext, useRef } from 'react'
+
 import styled from 'styled-components'
+import { toast } from 'react-toastify'
+
 import { addTOCart } from '../services/cartAPI'
 import { AuthContext } from '../context/AuthContext'
-import { toast } from 'react-toastify'
 
 const Product = ({ product, addToCart }) => {
   const { user } = useContext(AuthContext)
+  const videoRef = useRef(null)
 
+  // Set video initial speed
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5 
+    }
+  }, [])
+
+  // No product return
   if (!product) {
     return null
   }
 
+  // Add to cart 
   const handleAddToCart = async () => {
     const token = user?.token
-    if (!token) return toast.warning("Login to access cart")
+    if (!token) return toast.warning('Login to access cart')
 
     try {
       await addTOCart({ productId: product._id }, token)
-      toast.success("Product added to cart!")
+      toast.success('Product added to cart!')
     } catch (error) {
-      toast.error("Error adding to cart! Please try again later.")
+      toast.error('Error adding to cart! Please try again later.')
       console.error('Error Adding to cart: ' + error.message)
     }
 
     addToCart(product)
   }
 
+// Increase video speed on hover
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 1.5 
+    }
+  }
+
+// Reset video speed on hover out
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5 
+    }
+  }
+
   return (
-    <Card>
+    <Card onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}>
       <ImageContainer>
         <Image alt="img" src={product.image} />
-        <Video autoPlay muted loop>
+        <Video
+         as="video" 
+          ref={videoRef}
+          autoPlay
+          muted
+          loop          
+        >
           <source src={product.image} type="video/mp4" />
         </Video>
       </ImageContainer>
@@ -84,12 +117,12 @@ const Card = styled.div`
 
   @media (max-width: 768px) {
     &:nth-child(odd) {
-    flex-direction: column;
-  }
+      flex-direction: column;
+    }
 
-  &:nth-child(even) {
-    flex-direction: column;
-  }
+    &:nth-child(even) {
+      flex-direction: column;
+    }
   }
 `
 
@@ -101,6 +134,7 @@ const ImageContainer = styled.div`
   margin-block: 1rem;
   position: relative;
   transition: all.3s;
+  overflow: hidden;
   @media (max-width: 768px) {
   }
 `
