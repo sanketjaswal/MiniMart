@@ -4,6 +4,7 @@ import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { getCart, removeFromCart } from '../services/cartAPI';
 import { sendQuery } from '../services/queryAPI';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -20,6 +21,8 @@ const Cart = () => {
       if (token) {
         try {
           const res = await getCart(token);
+          // console.log("Cart fetched", res.data.products)
+
           setCart(res.data.products);
         } catch (error) {
           console.error("Error fetching cart:", error);
@@ -35,18 +38,21 @@ const Cart = () => {
     try {
       await removeFromCart(productId, token);
       setCart(cart.filter((item) => item.productId._id !== productId));
+      toast.success("Product Removed successfully")
+  
     } catch (error) {
-      console.error("Error removing item:", error);
+      toast.error("Error removing item! Please try again later!")
+      // console.error("Error removing item:", error);
     }
   };
   const handleSendQuery = async () => {
     if (!token) {
-      alert("Please login to send a query.");
+      toast.warning("Please login to send a query.")
       return;
     }
 
     if (cart.length === 0) {
-      alert("Your cart is empty.");
+      toast.warning("Your cart is empty.")
       return;
     }
 
@@ -54,11 +60,11 @@ const Cart = () => {
 
     try {
       await sendQuery(productNames, token);
-      console.log("Query sent successfully!");
+      toast.success("Query sent successfully!")
       setQuerySent(true);
     } catch (error) {
-      console.error("Error sending query.");
-      console.error(error);
+      toast.error("Error sending query!")
+      // console.error("", error);
     }
   };
 
@@ -73,7 +79,7 @@ const Cart = () => {
         cart.map((item) => (
           <CartItem key={item.productId._id}>
             <ImageContainer>
-              <Image src={item.productId.image} alt={item.productId.name} />
+             {/* { <Image src={item.productId.image} alt={item.productId.name} />} */}
               <Video autoPlay muted loop>
                 <source src={item.productId.image} type="video/mp4" />
               </Video>
@@ -91,10 +97,10 @@ const Cart = () => {
         ))
       )}
       {
-        loading ?  "" :
+        cart ?  
         <QueryButton onClick={handleSendQuery} disabled={querySent}>
         Send Query
-      </QueryButton>
+      </QueryButton> : ""
       }
     </Container>
   );
@@ -196,22 +202,22 @@ const ImageContainer = styled.div`
   transition: all 0.3s;
 `;
 
-const Image = styled.img`
-  width: 50%;
-  height: auto;
-  display: none;
-  border-radius: 0.5rem;
-  position: absolute;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: 0.3s ease-in-out;
-  transform: scale(0.9);
-  top: 0.75rem;
+// const Image = styled.img`
+//   width: 50%;
+//   height: auto;
+//   display: none;
+//   border-radius: 0.5rem;
+//   position: absolute;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   transition: 0.3s ease-in-out;
+//   transform: scale(0.9);
+//   top: 0.75rem;
 
-  ${CartItem}:hover & {
-    transform: scale(1);
-    top: -0.75rem;
-  }
-`;
+//   ${CartItem}:hover & {
+//     transform: scale(1);
+//     top: -0.75rem;
+//   }
+// `;
 
 const Video = styled.video`
   width: 80%;
@@ -319,7 +325,8 @@ const QueryButton = styled.button`
   color: white;
   border: none;
   margin-top: 2rem;
-  animation: ${SlideIn} 01s ease-in-out;
+  opacity: 0;
+  animation: ${SlideIn} 01s ease-in-out 2s forwards;
   font-size: 18px;
 
 

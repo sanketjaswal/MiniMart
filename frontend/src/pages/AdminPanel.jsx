@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { addProduct, deleteProduct, getProducts } from '../services/productAPI'
 import styled, { keyframes } from 'styled-components'
+import { toast } from 'react-toastify'
 
 const AdminPanel = () => {
   // Auth context
@@ -22,6 +23,7 @@ const AdminPanel = () => {
       //API call
       const res = await getProducts()
       setProducts(res.data)
+      
     }
     fetchProducts()
   }, [])
@@ -31,31 +33,33 @@ const AdminPanel = () => {
     e.preventDefault()
 
     const token = user?.token
-    if (!token) return alert('Unauthorized')
+    if (!token) return toast.warning('Unauthorized');
 
     const newProduct = { name, time, description, image }
-    console.log(newProduct)
 
     // API call
     try {
       await addProduct(newProduct, token)
-      alert('Product added!')
+      toast.success('New Product added!');
     } catch (error) {
-      console.error('Error Adding Product', error)
+      toast.success('Error Adding Product!');
+      // console.error('Error Adding Product', error)
     }
   }
 
   // Delete product
   const handleDeleteProduct = async (id) => {
     const token = user?.token
-    if (!token) return alert('Unauthorized')
+    if (!token) return toast.warning('Unauthorized')
 
       //API call
     try {
       await deleteProduct(id, token)
       setProducts(products.filter((product) => product._id !== id))
+      toast.success('Product deleted!')
     } catch (error) {
-      console.error('Error deleting product:', error)
+      toast.error('Error deleting product!')
+      // console.error('Error deleting product:', error)
     }
   }
 
@@ -64,9 +68,9 @@ const AdminPanel = () => {
       <Title>Admin Panel</Title>
       <Form onSubmit={handleAddProduct}>
         <Input type="text" placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <Input type="text" placeholder="Time taken for project" value={time} onChange={(e) => setTime(e.target.value)} />
+        <Input type="text" placeholder="Time taken for Completion" value={time} onChange={(e) => setTime(e.target.value)} />
         <Input type="text" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <Input type="text" placeholder="Image URL" value={image} onChange={(e) => setImage(e.target.value)} />
+        <Input type="text" placeholder="Video URL" value={image} onChange={(e) => setImage(e.target.value)} />
         <SubmitButton type="submit">Add Product</SubmitButton>
       </Form>
 

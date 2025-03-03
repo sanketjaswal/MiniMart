@@ -14,6 +14,7 @@ import Navbar from './components/Navbar'
 import AdminPanel from './pages/AdminPanel'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   // Check if user is authenticated
@@ -27,6 +28,7 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <Router>
+        <ToastContainer theme='dark'/>
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />

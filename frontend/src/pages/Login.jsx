@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 
+import { toast } from 'react-toastify';
+
 import { login } from '../services/authAPI'
 import { AuthContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -28,11 +30,12 @@ const Login = () => {
 
       // Save user data in local storage
       loginUser(data.data)
-      alert('Login successful!')
+      toast.success(`Login successful!`)
 
       // Redirect to home page
-      navigate('/')
+        navigate('/')
     } catch (error) {
+      toast.error("Error Logging In!")
       console.error(
         'Error Logging in user: ' +
           (error.response?.data?.error || error.message)

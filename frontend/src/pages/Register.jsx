@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { register } from '../services/authAPI'
 import styled, { keyframes } from 'styled-components'
+import { toast } from 'react-toastify'
 
 const Register = () => {
   // States
@@ -27,12 +28,12 @@ const Register = () => {
       })
 
       console.log(data)
-
-      alert('Registration successful! Please log in.')
+      toast.success("Registration successful! Please log in..!")
 
       // Redirect to login page
       navigate('/login')
     } catch (error) {
+      toast.error("Error registering you in!")
       console.error(
         'Error registering user: ' +
           ( error.message)
