@@ -21,16 +21,17 @@ const Cart = () => {
       if (token) {
         try {
           const res = await getCart(token);
-          // console.log("Cart fetched", res.data.products)
-
           setCart(res.data.products);
         } catch (error) {
           console.error("Error fetching cart:", error);
         } finally {
           setLoading(false);
         }
+      } else {
+        setLoading(false); // Fix: Ensure loading is set to false if no user is logged in
       }
     };
+  
     fetchCart();
   }, [token, setCart]);
 
@@ -70,10 +71,13 @@ const Cart = () => {
 
   return (
     <Container>
-      <Title>Shopping Cart</Title>
+      <Title>CART</Title>
       {loading ? (
         <Message>Loading...</Message>
-      ) : cart.length === 0 ? (
+      ) : user == null ? (
+        <Message>Please login to view your cart.</Message>
+      )
+      : cart.length === 0 ? (
         <Message>Your cart is empty.</Message>
       ) : (
         cart.map((item) => (
@@ -97,7 +101,7 @@ const Cart = () => {
         ))
       )}
       {
-        cart ?  
+        cart ?
         <QueryButton onClick={handleSendQuery} disabled={querySent}>
         Send Query
       </QueryButton> : ""
@@ -114,12 +118,18 @@ export default Cart;
 const slideRight = keyframes`
   0% {
     transform: translateX(100%);
+    font-style: italic;
+
   }
   95% {
     transform: translateX(-2%);
+    font-style: italic;
+
   }
   100% {
     transform: translateX(0);
+    font-style: normal
+
   }
 `;
 

@@ -71,7 +71,13 @@ const Card = styled.div`
     transform: scale(1.01) translateY(-5px);
   }
 
-  &:hover {
+  /* Alternate row direction */
+  &:nth-child(odd) {
+    flex-direction: row;
+  }
+
+  &:nth-child(even) {
+    flex-direction: row-reverse;
   }
 
   @media (max-width: 768px) {

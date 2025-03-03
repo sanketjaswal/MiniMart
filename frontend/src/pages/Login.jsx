@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <Container>
-      <Title>Login</Title>
+      <Title>LOGIN</Title>
       <FormContainer>
       <form onSubmit={handleSubmit}>
         <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
@@ -62,12 +62,15 @@ export default Login
 const slideRight = keyframes`
   0% {
     transform: translateX(100%);
+    font-style: italic;
   }
   95% {
     transform: translateX(-2%);
+    font-style: italic;
   }
   100% {
     transform: translateX(0);
+    font-style: normal
   }
 `;
 

@@ -44,7 +44,7 @@ const Register = () => {
   return (
     <Container>
 
-    <Title>Register</Title>
+    <Title>REGISTER</Title>
     <FormContainer>
     <form onSubmit={handleSubmit}>
       <Input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
@@ -64,12 +64,15 @@ export default Register
 const slideLeft = keyframes`
   0% {
     transform: translateX(-100%);
+    font-style: italic;
   }
   95% {
     transform: translateX(2%);
+    font-style: italic;
   }
   100% {
     transform: translateX(0);
+    font-style: normal;
   }
 `;
 

@@ -23,7 +23,7 @@ const AdminPanel = () => {
       //API call
       const res = await getProducts()
       setProducts(res.data)
-      
+
     }
     fetchProducts()
   }, [])
@@ -65,7 +65,7 @@ const AdminPanel = () => {
 
   return (
     <Container>
-      <Title>Admin Panel</Title>
+      <Title>ADMIN PANEL</Title>
       <Form onSubmit={handleAddProduct}>
         <Input type="text" placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} />
         <Input type="text" placeholder="Time taken for Completion" value={time} onChange={(e) => setTime(e.target.value)} />
@@ -107,12 +107,15 @@ export default AdminPanel
 const slideLeft = keyframes`
   0% {
     transform: translateX(-100%);
+    font-style: italic;
   }
   95% {
     transform: translateX(2%);
+    font-style: italic;
   }
   100% {
     transform: translateX(0);
+    font-style: normal;
   }
 `;
 
@@ -154,6 +157,7 @@ const Title = styled.h2`
   margin-bottom: 1.5rem;
   color: #0ea5e9;
   animation: ${slideLeft} 01s ease-in-out;
+  /* font-style: italic; */
 
   @media (max-width: 768px) {
     font-size: 1.5rem;

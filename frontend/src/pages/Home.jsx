@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <Container>
-      <Title>Products</Title>
+      <Title>HOME</Title>
       <ProductsGrid>
         {products.map((product) => (
           <Product key={product._id} product={product} addToCart={addToCart} />
@@ -38,12 +38,17 @@ export default Home
 const slideLeft = keyframes`
   0% {
     transform: translateX(-100%);
+    font-style: italic;
   }
   95% {
     transform: translateX(2%);
+    font-style: italic;
+
   }
   100% {
     transform: translateX(0);
+    font-style: normal
+
   }
 `;
 
