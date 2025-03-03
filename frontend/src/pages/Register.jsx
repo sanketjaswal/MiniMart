@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { register } from '../services/authAPI'
@@ -14,6 +14,12 @@ const Register = () => {
 
     //useNavigate hook
   const navigate = useNavigate()
+
+    // change title
+    useEffect(() => {
+      document.title = "Mini Mart - Register";
+    }, [])
+  
 
   // Register User
   const handleSubmit = async (e) => {

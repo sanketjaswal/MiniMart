@@ -31,6 +31,8 @@ const Cart = () => {
         setLoading(false); // Fix: Ensure loading is set to false if no user is logged in
       }
     };
+    document.title = "Mini Mart - Cart";
+
   
     fetchCart();
   }, [token, setCart]);

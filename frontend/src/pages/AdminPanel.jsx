@@ -25,6 +25,8 @@ const AdminPanel = () => {
       setProducts(res.data)
 
     }
+    document.title = "Mini Mart - Admin Access";
+
     fetchProducts()
   }, [])
 

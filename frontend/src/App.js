@@ -6,6 +6,8 @@ import {
   Navigate,
 } from 'react-router-dom'
 
+import "./App.css"
+
 import Cart from './pages/Cart'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -21,15 +23,12 @@ function App() {
   const storedUser = localStorage.getItem('user')
   const isAuthenticated = storedUser ? JSON.parse(storedUser).isAdmin : false
 
-  // const isAuthenticated = true;
-  console.log('isAuthenticated:', isAuthenticated)
-
   return (
     <AuthProvider>
       <CartProvider>
         <Router>
+            <Navbar />
         <ToastContainer theme='dark'/>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

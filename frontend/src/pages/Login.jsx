@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState, useContext } from 'react'
 
 import { toast } from 'react-toastify';
@@ -12,6 +12,11 @@ const Login = () => {
   //states
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  // change title
+  useEffect(() => {
+    document.title = "Mini Mart - Login";
+  }, [])
 
   //login context
   const { login: loginUser } = useContext(AuthContext)

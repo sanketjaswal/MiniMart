@@ -13,6 +13,7 @@ const Home = () => {
     const fetchProducts = async () => {
       const res = await getProducts()
       setProducts(res.data)
+      document.title = "Mini Mart";
       // console.log(res.data);
     }
     fetchProducts()
@@ -20,7 +21,7 @@ const Home = () => {
 
   return (
     <Container>
-      <Title>HOME</Title>
+      <Title>OUR PRODUCTS</Title>
       <ProductsGrid>
         {products.map((product) => (
           <Product key={product._id} product={product} addToCart={addToCart} />
