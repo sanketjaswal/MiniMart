@@ -125,8 +125,6 @@ const wobble = keyframes`
   70% { transform: scale(1.2) }
   100% { transform: scale(1) ; }
 `
-
-
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -195,13 +193,9 @@ const Links = styled.div`
   align-items: center;
   gap: 1.5rem;
   margin-right: 10%;
-  /* background-color: #fff; */
-
-  /* background-color: red; */
 
   @media (max-width: 768px) {
     width: 100%;
-
     margin-top: 1rem;
     flex-direction: column;
     align-items: flex-end;
@@ -220,7 +214,6 @@ const StyledLink = styled(Link)`
   transition: 0.3s ease-in-out;
   user-select: none;
   font-weight: 700;
-  opacity: 0;
 
   &:nth-child(1) {
     animation: ${SlideIn} 0.4s ease-in-out forwards;

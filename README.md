@@ -39,7 +39,7 @@ git clone https://github.com/sanketjaswal/MiniMart.git
 cd Book-recommendation
 ```
 
-### 2. Install dependencies
+### 2. Install Dependencies in seperate Terminals
 
 ```shell
 cd backend
@@ -59,7 +59,7 @@ ADMIN_EMAIL=your_admin_email
 ADMIN_EMAIL_PASSWORD=your_admin_password
 ```
 
-### 4. Start the application
+### 4. Start the application in seperate Terminals
 
 ```shell
 cd backend

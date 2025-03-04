@@ -18,6 +18,7 @@ import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import { ToastContainer } from 'react-toastify'
 import { Footer } from './components/Footer'
+import { ChatBox } from './components/ChatBox'
 
 function App() {
   // Check if user is authenticated
@@ -41,6 +42,7 @@ function App() {
               element={isAuthenticated ? <AdminPanel /> : <Navigate to="/" />}
             />
           </Routes>
+          <ChatBox />
           <Footer />
         </Router>
       </CartProvider>

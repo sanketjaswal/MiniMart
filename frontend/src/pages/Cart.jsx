@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
+
+import { toast } from 'react-toastify'
 import styled, { keyframes } from 'styled-components'
+
 import { CartContext } from '../context/CartContext'
 import { AuthContext } from '../context/AuthContext'
 import {
@@ -8,9 +11,8 @@ import {
   increaseQuantity,
   removeFromCart,
 } from '../services/cartAPI'
-import { sendQuery } from '../services/queryAPI'
-import { toast } from 'react-toastify'
 import { Loader } from '../components/Loader'
+import { sendQuery } from '../services/queryAPI'
 
 const Cart = () => {
   const { cart, setCart } = useContext(CartContext)

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+
+import { toast } from 'react-toastify'
+import styled, { keyframes } from 'styled-components'
 
 import { AuthContext } from '../context/AuthContext'
 import { addProduct, deleteProduct, getProducts } from '../services/productAPI'
-import styled, { keyframes } from 'styled-components'
-import { toast } from 'react-toastify'
 
 const AdminPanel = () => {
   // Auth context
