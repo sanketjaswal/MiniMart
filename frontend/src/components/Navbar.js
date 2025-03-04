@@ -99,10 +99,12 @@ const logoAnimation = keyframes`
   50% {
   padding-left: 45%;
   padding-block: 1rem;
+  transform: scale(1) ;
     opacity: 1;
   }
   100% {
-    transform: scale(1) translateY(0);
+    transform: scale(1) ;
+    padding: 1rem 2rem;
     opacity: 1;
   }
 `

@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { CartContext } from '../context/CartContext'
 import { AuthContext } from '../context/AuthContext'
-import { getCart, removeFromCart } from '../services/cartAPI'
+import {
+  decreaseQuantity,
+  getCart,
+  increaseQuantity,
+  removeFromCart,
+} from '../services/cartAPI'
 import { sendQuery } from '../services/queryAPI'
 import { toast } from 'react-toastify'
 import { Loader } from '../components/Loader'
@@ -14,19 +19,21 @@ const Cart = () => {
   const [loading, setLoading] = useState(true)
   const [querySent, setQuerySent] = useState(false)
 
+  // First render
   useEffect(() => {
     const fetchCart = async () => {
       if (token) {
         try {
           const res = await getCart(token)
           setCart(res.data.products)
+          console.log(res.data.products)
         } catch (error) {
           console.error('Error fetching cart:', error)
         } finally {
           setLoading(false)
         }
       } else {
-        setLoading(false) // Fix: Ensure loading is set to false if no user is logged in
+        setLoading(false)
       }
     }
     document.title = 'Mini Mart - Cart'
@@ -34,6 +41,7 @@ const Cart = () => {
     fetchCart()
   }, [token, setCart])
 
+  // Handle remove from cart
   const handleRemove = async (productId) => {
     try {
       await removeFromCart(productId, token)
@@ -44,6 +52,8 @@ const Cart = () => {
       // console.error("Error removing item:", error);
     }
   }
+
+  // Handle send query parameters
   const handleSendQuery = async () => {
     if (!token) {
       toast.warning('Please login to send a query.')
@@ -67,11 +77,37 @@ const Cart = () => {
     }
   }
 
+  // Handle increase quantity
+  const handleIncrease = async (productId) => {
+    try {
+      const res = await increaseQuantity(productId, token)
+      console.log(res.data.products)
+      setCart(res.data.products)
+
+    } catch (error) {
+            console.error("Error increasing quantity:", error);
+      toast.error('Error increasing quantity')
+    }
+  }
+
+  // Handle decrease quantity
+  const handleDecrease = async (productId) => {
+    try {
+      console.log("token",token)
+      const res = await decreaseQuantity(productId, token)
+      setCart(res.data.products) // Update cart state with new quantity
+    } catch (error) {
+      toast.error('Error decreasing quantity')
+      console.error("Error decreasing quantity:", error);
+
+    }
+  }
+
   return (
     <Container>
       <Title>CART</Title>
       {loading ? (
-          <Loader />
+        <Loader />
       ) : user == null ? (
         <Message>Please login to view your cart.</Message>
       ) : cart.length === 0 ? (
@@ -88,9 +124,20 @@ const Cart = () => {
             <Details>
               <ItemTitle>{item?.productId.name}</ItemTitle>
               <Description>{item?.productId.description}</Description>
+              <Time><strong>Time Taken for Product Completion : </strong>{item?.productId.time} Weeks</Time>
               <QuantityControls>
-                {/* <h3>Quanity : </h3> */}
-                {/* <Quantity>{item?.quantity}</Quantity> */}
+                <h3>Quanity : </h3>
+                <QuantityButton
+                  onClick={() => handleDecrease(item?.productId._id)}
+                >
+                  --
+                </QuantityButton>
+                <Quantity>{item?.quantity}</Quantity>
+                <QuantityButton
+                  onClick={() => handleIncrease(item?.productId._id)}
+                >
+                  +
+                </QuantityButton>
               </QuantityControls>
               <RemoveButton onClick={() => handleRemove(item?.productId._id)}>
                 Remove
@@ -202,14 +249,16 @@ const CartItem = styled.div`
 
 const ImageContainer = styled.div`
   width: 100%;
-  min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-block: 1rem;
   position: relative;
-  transition: all 0.3s;
+  transition: all.3s;
+  overflow: hidden;
+  @media (max-width: 768px) {
+  }
 `
-
 // const Image = styled.img`
 //   width: 50%;
 //   height: auto;
@@ -285,25 +334,68 @@ const Description = styled.p`
   }
 `
 
+const Time = styled.p`
+  color: #4b5563;
+  font-size: 1rem;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box;
+  text-align: center;
+  transition: all 0.3s;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`
 const QuantityControls = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin: 1rem 0;
+  transition: 0.3s ease-in-out;
+
+  opacity: 0;
+
+  ${CartItem}:hover & {
+    opacity: 1;
+    transform: translateY(-15px);
+  }
+
 `
 
-// const Quantity = styled.span`
-//   font-size: 1.5rem;
-//   font-weight: bold;
-//   color: #fff;
-// `;
+const Quantity = styled.span`
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+`
+
+const QuantityButton = styled.button`
+  background: #0ea5e9;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: 0.1s ease-in-out;
+
+    &:hover {
+    background: #055372;
+  }
+
+  &:active{
+    transform: scale(0.95);
+  }
+
+`
 
 const RemoveButton = styled.button`
   background: #be123c;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out .1s;
   cursor: pointer;
   color: white;
   border: none;
